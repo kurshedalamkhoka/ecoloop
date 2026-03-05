@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLoop | Waste Management & Recycling</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e2f3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* global container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* header / nav */
+        header {
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 40, 20, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(6px);
+            background: rgba(255,255,255,0.9);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f3b2c;
+        }
+
+        .logo i {
+            color: #2e9a6e;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f3b2f;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: #e0f0e8;
+            color: #0f6b47;
+        }
+
+        /* mobile menu (simplified toggle) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid #cbd5ce;
+            font-size: 1.5rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            color: #1f3b2f;
+            cursor: pointer;
+        }
+
+        /* page sections */
+        .page-section {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+
+        .page-section.active-section {
+            display: block;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* headings */
+        h1 { font-size: 2.6rem; font-weight: 700; color: #0d3728; margin-bottom: 0.5rem; }
+        h2 { font-size: 2rem; margin-bottom: 1.2rem; color: #1b4b3a; }
+        h3 { font-weight: 600; color: #1b4b3a; }
+
+        /* cards & utilities */
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 10px 25px -8px rgba(0,50,30,0.1);
+            transition: all 0.15s;
+            border: 1px solid #deede7;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 22px 30px -12px #b6d5c4; }
+
+        .btn {
+            background: #1d7a56;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1d7a56;
+            color: #1d7a56;
+        }
+        .btn:hover { background: #0f5f40; transform: scale(1.02); }
+        .btn-outline:hover { background: #e5f4ed; }
+
+        /* home hero */
+        .hero {
+            background: linear-gradient(115deg, #e6f4ee 0%, #ffffff 80%);
+            border-radius: 40px;
+            padding: 3rem 3rem;
+            margin-bottom: 2rem;
+        }
+
+        /* stats / impact */
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0f6b47;
+            line-height: 1.2;
+        }
+
+        /* blog preview */
+        .blog-card img { width: 100%; border-radius: 24px; height: 180px; object-fit: cover; }
+
+        /* contact form */
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 30px;
+            border: 1px solid #cde0d6;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .contact-form textarea { min-height: 140px; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #486b5e;
+            border-top: 1px solid #cde0d6;
+            margin-top: 3rem;
+        }
+
+        /* schedule pickup row */
+        .pickup-options { background: #eaf8f1; border-radius: 40px; padding: 2rem; }
+
+        /* map placeholder (recycling centers) */
+        .map-placeholder {
+            background: #c1ddd0;
+            height: 280px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d4e3a;
+            font-weight: 500;
+            border: 2px dashed #5b9b80;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; align-items: start; gap: 0.8rem; }
+            .nav-links { display: none; width: 100%; flex-direction: column; background: white; border-radius: 30px; padding: 1rem; }
+            .nav-links.show { display: flex; }
+            .menu-toggle { display: block; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><i class="fas fa-recycle"></i> EcoLoop</div>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i> Menu</button>
+            <div class="nav-links" id="navLinks">
+                <a href="#" data-page="home" class="active">Home</a>
+                <a href="#" data-page="about">About Us</a>
+                <a href="#" data-page="services">Services</a>
+                <a href="#" data-page="schedule">Schedule Pickup</a>
+                <a href="#" data-page="centers">Recycling Centers</a>
+                <a href="#" data-page="impact">Impact / Stats</a>
+                <a href="#" data-page="blog">Blog / Awareness</a>
+                <a href="#" data-page="contact">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+<!-- HOME PAGE - Enhanced Version -->
+<section id="home" class="page-section active-section">
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <span class="badge">🌍 Serving 25+ cities nationwide</span>
+            <h1>Close the loop, <br>start again.</h1>
+            <p class="hero-subtitle">Smart waste management & recycling for businesses and communities. Join 50,000+ happy households and 1,200+ businesses in our zero-waste journey.</p>
+            <div class="hero-stats">
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">50K+</span>
+                    <span class="hero-stat-label">Households</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">1.2K+</span>
+                    <span class="hero-stat-label">Businesses</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">42K+</span>
+                    <span class="hero-stat-label">Tons Recycled</span>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#" class="btn btn-primary" data-nav="schedule">
+                    <i class="fas fa-calendar-check"></i> Schedule pickup
+                </a>
+                <a href="#" class="btn btn-secondary" data-nav="centers">
+                    <i class="fas fa-map-marker-alt"></i> Find center
+                </a>
+                <a href="#" class="btn btn-outline" data-nav="services">
+                    <i class="fas fa-play"></i> Watch demo
+                </a>
+            </div>
+            <p class="trust-badge">
+                <i class="fas fa-shield-alt"></i> Trusted by EPA & Green Business Bureau
+            </p>
+        </div>
+        <div class="hero-image">
+            <img src="https://placehold.co/600x400/1d7a56/white?text=Recycling+In+Action" alt="Recycling process" style="border-radius: 30px; width: 100%;">
+        </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="features-grid">
+        <div class="card feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-truck"></i>
+            </div>
+            <h3>Curbside pickup</h3>
+            <p>Regular or on‑demand collection for homes & offices. Flexible scheduling with real-time notifications.</p>
+            <a href="#" class="feature-link" data-nav="schedule">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="card feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Zero-waste consulting</h3>
+            <p>We help your business reduce waste and costs. Free audit for first-time clients.</p>
+            <a href="#" class="feature-link" data-nav="services">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="card feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h3>E‑waste & hazardous</h3>
+            <p>Safe disposal for electronics, batteries, chemicals. Certified green disposal methods.</p>
+            <a href="#" class="feature-link" data-nav="services">Learn more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="how-it-works">
+        <div class="section-header">
+            <span class="section-badge">Simple Process</span>
+            <h2>How it works</h2>
+            <p>Three easy steps to a cleaner tomorrow</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <i class="fas fa-calendar-plus step-icon"></i>
+                <h4>Schedule pickup</h4>
+                <p>Choose your preferred date and time through our app or website</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <i class="fas fa-trash-alt step-icon"></i>
+                <h4>We collect</h4>
+                <p>Our team arrives with eco-friendly vehicles to collect your waste</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <i class="fas fa-recycle step-icon"></i>
+                <h4>Responsible recycling</h4>
+                <p>Your waste is sorted and sent to certified recycling facilities</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+        <div class="section-header">
+            <span class="section-badge">Testimonials</span>
+            <h2>What our community says</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"EcoLoop transformed how our office handles waste. We've reduced landfill contribution by 80%!"</p>
+                <div class="testimonial-author">
+                    <img src="https://placehold.co/100x100/1d7a56/white?text=JD" alt="SM Golam Azam">
+                    <div>
+                        <strong>SM Golam Azam</strong>
+                        <span>Green Tech Solutions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"The curbside pickup is so convenient. The app reminders are a lifesaver. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <img src="https://placehold.co/100x100/1d7a56/white?text=JS" alt="Musfiq">
+                    <div>
+                        <strong>Musfiq</strong>
+                        <span>Homeowner</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Their e-waste disposal service is professional and responsible. Great team to work with."</p>
+                <div class="testimonial-author">
+                    <img src="https://placehold.co/100x100/1d7a56/white?text=MB" alt="Tushar">
+                    <div>
+                        <strong>Tushar</strong>
+                        <span>Brown Electronics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+        <div class="cta-content">
+            <h3>Ready to start your zero-waste journey?</h3>
+            <p>Join thousands of satisfied customers making a difference today</p>
+            <a href="#" class="btn btn-primary btn-large" data-nav="schedule">
+                <i class="fas fa-calendar-check"></i> Schedule your first pickup
+            </a>
+        </div>
+    </div>
+
+    <!-- Partners Section -->
+    <div class="partners">
+        <p>Trusted by leading organizations</p>
+        <div class="partner-logos">
+            <span class="partner-logo">🌿 GreenBiz</span>
+            <span class="partner-logo">♻️ EcoAlliance</span>
+            <span class="partner-logo">🏭 ZeroWaste Inc</span>
+            <span class="partner-logo">🌎 EarthFirst</span>
+            <span class="partner-logo">💚 CleanFuture</span>
+        </div>
+    </div>
+    <style>
+        /* Additional CSS for enhanced Home page */
+:root {
+    --primary: #1d7a56;
+    --primary-dark: #0f5f40;
+    --primary-light: #e5f4ed;
+    --secondary: #f4a261;
+    --text-dark: #1e2f3e;
+    --text-light: #486b5e;
+    --white: #ffffff;
+    --gray-bg: #f4f7fb;
+    --border-light: #deede7;
+    --shadow: 0 10px 25px -8px rgba(0,50,30,0.1);
+    --shadow-hover: 0 22px 30px -12px #b6d5c4;
+}
+
+/* Hero Section Enhancements */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: linear-gradient(135deg, #e6f4ee 0%, #ffffff 100%);
+    border-radius: 40px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.badge {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+    font-size: 3.2rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    line-height: 1.2;
+}
+
+.hero-stat-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.8rem 2rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-dark);
+    border: 2px solid var(--border-light);
+    padding: 0.8rem 2rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-outline:hover {
+    background: var(--gray-bg);
+    border-color: var(--primary);
+}
+
+.btn-large {
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+}
+
+.trust-badge {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trust-badge i {
+    color: var(--primary);
+}
+
+.hero-image img {
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.hero-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.feature-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-icon {
+    background: var(--primary-light);
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon i {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.feature-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.feature-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.3s;
+}
+
+.feature-link:hover {
+    gap: 0.8rem;
+}
+
+/* How It Works Section */
+.how-it-works {
+    margin-bottom: 4rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-badge {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.section-header p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.step-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s;
+}
+
+.step-card:hover {
+    transform: translateY(-4px);
+}
+
+.step-number {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(29, 122, 86, 0.1);
+    line-height: 1;
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.step-card h4 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.step-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* Testimonials Section */
+.testimonials {
+    margin-bottom: 4rem;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card p {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonial-author strong {
+    display: block;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.testimonial-author span {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* CTA Banner */
+.cta-banner {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 40px;
+    padding: 3rem;
+    margin-bottom: 4rem;
+    text-align: center;
+    color: var(--white);
+}
+
+.cta-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-banner .btn-primary {
+    background: var(--white);
+    color: var(--primary);
+    border: none;
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+}
+
+.cta-banner .btn-primary:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+/* Partners Section */
+.partners {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.partners p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.partner-logos {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.partner-logo {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.partner-logo:hover {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .hero-cta {
+        justify-content: center;
+    }
+    
+    .features-grid,
+    .steps-grid,
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .partner-logos {
+        gap: 1.5rem;
+    }
+    
+    .partner-logo {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cta-banner {
+        padding: 2rem;
+    }
+    
+    .cta-content h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation classes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card, .step-card, .testimonial-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</section>
+
+        <!-- ABOUT US -->
+        <section id="about" class="page-section">
+            <h2>🌱 Our mission</h2>
+            <div class="grid-2" style="align-items: center;">
+                <div>
+                    <p style="font-size: 1.2rem;">EcoLoop was founded in 2018 to transform waste into resources. We operate in 12 cities, diverting over 40,000 tons from landfills annually. We believe in transparency, circular economy, and community education.</p>
+                    <p style="margin-top: 1rem;">We work with local recyclers, municipalities, and innovators to make recycling simple and effective.</p>
+                </div>
+                <div class="card"><i class="fas fa-leaf" style="font-size: 4rem;"></i><h3>Certified B Corp</h3><p>We meet the highest verified standards of social and environmental impact.</p></div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section id="services" class="page-section">
+            <h2>Our services</h2>
+            <div class="grid-3">
+                <div class="card"><i class="fas fa-dumpster fa-2x" style="color:#1d7a56;"></i><h3>Residential pickup</h3><p>Weekly or biweekly recycling, compost, and trash.</p></div>
+                <div class="card"><i class="fas fa-building fa-2x" style="color:#1d7a56;"></i><h3>Commercial recycling</h3><p>Custom programs for offices, restaurants, and construction.</p></div>
+                <div class="card"><i class="fas fa-battery-full fa-2x" style="color:#1d7a56;"></i><h3>Hazardous waste</h3><p>Paint, e-waste, chemicals – safe disposal events.</p></div>
+                <div class="card"><i class="fas fa-chalkboard-user fa-2x" style="color:#1d7a56;"></i><h3>Awareness workshops</h3><p>On-site or virtual trainings for schools and teams.</p></div>
+                <div class="card"><i class="fas fa-recycle fa-2x" style="color:#1d7a56;"></i><h3>Material buy-back</h3><p>We purchase scrap metal, cardboard, and electronics.</p></div>
+                <div class="card"><i class="fas fa-tree fa-2x" style="color:#1d7a56;"></i><h3>Compost service</h3><p>Food scraps turned into soil for urban farms.</p></div>
+            </div>
+        </section>
+
+        <!-- SCHEDULE PICKUP -->
+        <section id="schedule" class="page-section">
+            <h2>📅 Schedule a pickup</h2>
+            <div class="pickup-options grid-2">
+                <div class="card">
+                    <h3>📍 Address & time</h3>
+                    <p><i class="fas fa-map-pin"></i> Road No -5, Block A, Section 2, Mirpur, Dhaka</p>
+                    <p><i class="far fa-calendar"></i> Next available: tomorrow 8–12 AM</p>
+                    <button class="btn" style="margin-top: 1rem;" onclick="alert('demo: pickup scheduled (simulated)')">Choose this slot</button>
+                </div>
+                <div class="card">
+                    <h3>⚡ On‑demand pickup</h3>
+                    <p>Need a quick pickup? Request within 2 hours in select zones.</p>
+                    <input type="text" placeholder="your zip code" style="padding:0.8rem; border-radius:40px; border:1px solid #ccc; width:100%;">
+                    <button class="btn" style="margin-top:0.8rem;" onclick="alert('demo: on-demand requested')">Check availability</button>
+                </div>
+            </div>
+            <p style="margin-top: 1rem;">📞 or call <strong>1‑800‑RECYCLE</strong> to schedule by phone.</p>
+        </section>
+
+        <!-- RECYCLING CENTERS -->
+        <section id="centers" class="page-section">
+            <h2>📍 Recycling centers near you</h2>
+            <div class="grid-2">
+                <div>
+                    <div class="card"><i class="fas fa-landmark"></i> <strong>Northside drop‑off</strong><br> 2100 Industrial Dr, open Mon–Sat 8–6</div>
+                    <div class="card"><i class="fas fa-landmark"></i> <strong>South recycling hub</strong><br> 4570 Bayview St, 24h bins for cardboard</div>
+                    <div class="card"><i class="fas fa-landmark"></i> <strong>E‑waste center</strong><br> 982 Technology Pkwy, appointment only</div>
+                </div>
+                <div class="map-placeholder">
+                    <i class="fas fa-map" style="font-size: 3rem; opacity: 0.7;"></i>  Interactive map (loading…)
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT / STATISTICS -->
+        <section id="impact" class="page-section">
+            <h2>📊 Our collective impact</h2>
+            <div class="grid-4">
+                <div class="card stat-number">42,800 <span style="font-size: 1.2rem; display: block; font-weight: normal;">tons recycled</span></div>
+                <div class="card stat-number">1,240 <span style="font-size: 1.2rem; display: block; font-weight: normal;">trees saved</span></div>
+                <div class="card stat-number">187<span style="font-size: 1.2rem; display: block; font-weight: normal;">schools engaged</span></div>
+                <div class="card stat-number">9.2M <span style="font-size: 1.2rem; display: block; font-weight: normal;">kg CO₂ avoided</span></div>
+            </div>
+            <div style="margin-top: 2rem; background: white; border-radius: 30px; padding: 1.8rem;">
+                <p><i class="fas fa-chart-simple"></i> <strong>2024 diversion rate: 72%</strong> (up from 58% in 2022).</p>
+                <progress value="72" max="100" style="width:100%; height:20px; border-radius:20px;"></progress>
+            </div>
+        </section>
+
+        <!-- BLOG / AWARENESS -->
+        <section id="blog" class="page-section">
+            <h2>📰 latest from the loop</h2>
+            <div class="grid-3">
+                <div class="card blog-card"><img src="https://placehold.co/600x400/ccf0e0/1f5f3f?text=compost" alt="compost"><h3>Compost 101: what to toss</h3><p>Fruits, eggshells, coffee grounds... but no meat. Read more →</p></div>
+                <div class="card blog-card"><img src="https://placehold.co/600x400/ccf0e0/1f5f3f?text=ewaste" alt="e-waste"><h3>E‑waste crisis & you</h3><p>Only 17% of e‑waste is recycled. How to dispose properly. →</p></div>
+                <div class="card blog-card"><img src="https://placehold.co/600x400/ccf0e0/1f5f3f?text=plastic" alt="plastic"><h3>New bioplastic rules 2025</h3><p>What’s compostable vs recyclable? update your knowledge. →</p></div>
+            </div>
+        </section>
+
+        <!-- CONTACT US -->
+<!-- CONTACT US - Enhanced with Image -->
+<section id="contact" class="page-section">
+    <h2>📬 Let's talk trash (the right way)</h2>
+    <div class="grid-2">
+        <!-- Contact Form -->
+        <div class="card contact-form">
+            <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Send us a message</h3>
+            <input type="text" placeholder="Your name" id="contactName">
+            <input type="email" placeholder="Email address" id="contactEmail">
+            <input type="text" placeholder="Subject (optional)" id="contactSubject">
+            <textarea placeholder="Your message / question..." id="contactMsg"></textarea>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <button class="btn" onclick="submitContact()">Send message <i class="fas fa-paper-plane"></i></button>
+                <span style="color: var(--text-light); font-size: 0.9rem;">
+                    <i class="fas fa-clock"></i> Reply within 24h
+                </span>
+            </div>
+            <p id="contactFeedback" style="margin-top:0.5rem;"></p>
+        </div>
+        
+        <!-- Contact Info with Image -->
+        <div class="contact-info-card">
+            <!-- Image at the top -->
+            <div class="contact-image">
+                <img src="images/khurshed.jpeg" alt="Khurshed - Customer Support Representative" onerror="this.src='https://placehold.co/400x300/1d7a56/white?text=Khurshed+%0ASupport+Team'">
+                <div class="image-caption">
+                    <h4>Khurshed Alam</h4>
+                    <p>Customer Support Lead</p>
+                </div>
+            </div>
+            
+            <!-- Contact Details -->
+            <div class="contact-details">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">📍 Visit or reach us</h3>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Address</strong>
+                        <p>Holding No: 13, Block A, Road No: 5, Section 2, Mirpur, Dhaka</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Phone</strong>
+                        <p><a href="tel:+8801863369988">+880 1863369988</a> (24/7 support)</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Email</strong>
+                        <p><a href="mailto:kurshed242-30-041@diu.edu.bd">kurshed242-30-041@diu.edu.bd</a></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Office Hours</strong>
+                        <p>Monday – Friday: 8:30am – 6pm<br>Saturday: 9am – 2pm<br>Sunday: Closed</p>
+                    </div>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                
+                <p class="emergency-note">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    For emergency waste pickup, please call our 24/7 hotline
+                </p>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Additional CSS for Contact section with image */
+:root {
+    --primary: #1d7a56;
+    --primary-dark: #0f5f40;
+    --primary-light: #e5f4ed;
+    --text-dark: #1e2f3e;
+    --text-light: #486b5e;
+    --white: #ffffff;
+    --gray-bg: #f4f7fb;
+    --border-light: #deede7;
+    --shadow: 0 10px 25px -8px rgba(0,50,30,0.1);
+    --shadow-hover: 0 22px 30px -12px #b6d5c4;
+}
+
+/* Contact Form Enhancements */
+.contact-form {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 2.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border-radius: 30px;
+    border: 2px solid var(--border-light);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: var(--white);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(29, 122, 86, 0.1);
+}
+
+.contact-form input:hover,
+.contact-form textarea:hover {
+    border-color: var(--primary);
+}
+
+.contact-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.contact-form .btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-form .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Contact Info Card with Image */
+.contact-info-card {
+    background: var(--white);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Image Section */
+.contact-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background: var(--primary-light);
+}
+
+.contact-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s;
+}
+
+.contact-info-card:hover .contact-image img {
+    transform: scale(1.05);
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+}
+
+.image-caption h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+    color: white;
+}
+
+.image-caption p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0;
+    color: white;
+}
+
+/* Contact Details */
+.contact-details {
+    padding: 2rem;
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.info-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-icon i {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-content strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+}
+
+.info-content p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.info-content a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.info-content a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+}
+
+.social-icon:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* Emergency Note */
+.emergency-note {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 30px;
+    padding: 1rem;
+    color: #856404;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.emergency-note i {
+    font-size: 1.2rem;
+    color: #856404;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .contact-image {
+        height: 200px;
+    }
+    
+    .image-caption h4 {
+        font-size: 1.3rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .info-icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form,
+    .contact-details {
+        padding: 1.5rem;
+    }
+    
+    .contact-form .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .emergency-note {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Animation for contact card */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.contact-info-card {
+    animation: slideInRight 0.6s ease-out;
+}
+
+    </style>
+    <script>
+        
+    </script>
+</section>
+    </main>
+
+    <footer>
+        <p>♻️ EcoLoop – waste management & recycling platform © 2025 | Designed for circular future</p>
+    </footer>
+
+    <script>
+        // ---------- PAGE NAVIGATION (SINGLE PAGE) ----------
+        const sections = document.querySelectorAll('.page-section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        function showPage(pageId) {
+            sections.forEach(section => {
+                if(section.id === pageId) {
+                    section.classList.add('active-section');
+                } else {
+                    section.classList.remove('active-section');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.dataset.page === pageId) {
+                    link.classList.add('active');
+                }
+            });
+            // close mobile menu after click
+            document.getElementById('navLinks').classList.remove('show');
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+                if(page) showPage(page);
+                // update url hash silently
+                history.pushState(null, null, `#${page}`);
+            });
+        });
+
+        // handle initial hash / default
+        function setInitialPage() {
+            const hash = window.location.hash.substring(1); // remove '#'
+            if(hash && [...document.querySelectorAll('.page-section')].some(s => s.id === hash)) {
+                showPage(hash);
+            } else {
+                showPage('home'); // default home
+            }
+        }
+        window.addEventListener('load', setInitialPage);
+        window.addEventListener('hashchange', setInitialPage);
+
+        // also any "data-nav" buttons inside pages (like in hero)
+        document.querySelectorAll('[data-nav]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = btn.getAttribute('data-nav');
+                if(targetPage) {
+                    showPage(targetPage);
+                    history.pushState(null, null, `#${targetPage}`);
+                }
+            });
+        });
+
+        // ---------- MOBILE TOGGLE ----------
+        const toggleBtn = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navLinks');
+        toggleBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // ---------- CONTACT US (simple demo) ----------
+        window.submitContact = function() {
+            const name = document.getElementById('contactName')?.value.trim() || 'friend';
+            const email = document.getElementById('contactEmail')?.value.trim();
+            const msg = document.getElementById('contactMsg')?.value.trim();
+            const feedback = document.getElementById('contactFeedback');
+            if(!email || !msg) {
+                feedback.innerHTML = '⚠️ Please fill in email and message.';
+                return;
+            }
+            feedback.innerHTML = `✅ Thanks ${name}! We'll reply within 24h. (demo)`;
+            // clear fields (optional)
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMsg').value = '';
+        };
+
+        // schedule pickup button also needs demo (already inline alert)
+        // also center map placeholder just demo
+
+        // ensure any .btn within schedule works, but we already have onclick alert
+    </script>
+
+    <!-- small extra style for progress -->
+    <style>
+        progress {
+            accent-color: #1d7a56;
+            border-radius: 20px;
+            height: 20px;
+        }
+        progress::-webkit-progress-bar { background-color: #deede7; border-radius: 20px; }
+        progress::-webkit-progress-value { background-color: #1d7a56; border-radius: 20px; }
+    </style>
+</body>
+</html>
